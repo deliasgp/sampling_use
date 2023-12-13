@@ -1,13 +1,19 @@
 #ALEATORIO ESTRATIFICADO
-ssize.es <- function(n=c(),p=c(0.5),z=c(0.95),e=c(0.05),nr=c(0)) {
-    a=qnorm(1-(1-z)/2)
-    N=sum(n)
-    ah=n/N
-    numerador = (sum(n^2*p*(1-p)/ah,na.rm = T))
-    denominador = (N*e/a)^2+sum(n*p*(1-p),na.rm = T)
-    muestra = ceiling(numerador/denominador*ah*(1/(1-nr)))
-    muestra
+ssize.es <- function(n=c(),p=c(0.5),z=c(0.95),e=c(0.05),nr=c(0),ah=NA) {
+  a=qnorm(1-(1-z)/2)
+  N=sum(n)
+
+  if(max(is.na(ah))==1){
+    ah = n/N
+  } else {
+    ah = ah
+  }
+  numerador = (sum(n^2*p*(1-p)/ah,na.rm = T))
+  denominador = (N*e/a)^2+sum(n*p*(1-p),na.rm = T)
+  muestra = ceiling(numerador/denominador*ah*(1/(1-nr)))
+  muestra
 }
+
 #----------
 #ALEATORIO SIMPLE
 ssize.as <- function(n=c(),p=c(0.5),z=c(0.95),e=c(0.05),nr=c(0)) {
